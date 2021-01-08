@@ -2,31 +2,33 @@
 {
 	<#
 	.SYNOPSIS
-	Short description
+	Saves config-data for PSDracoon (authentication details, etc.)
 	
 	.DESCRIPTION
-	Long description
+	Tries to obtain Dracoon Authentication Token. If successful: Saves config-data for PSDracoon (authentication details, etc.)
 	
 	.PARAMETER BaseURL
-	Parameter description
+	Tenant URI
 	
 	.PARAMETER Credential
-	Parameter description
+	Authentication Credentials
 	
 	.PARAMETER ClientID
-	Parameter description
+	ClientID (Generated within Dracoon Application)
 	
 	.PARAMETER ClientSecret
-	Parameter description
+	ClientSecret (Generated within Dracoon Application)
 	
 	.PARAMETER RoomID
-	Parameter description
+	RoomID: Defines Online Space
+
+	.PARAMETER EnableException
+	Exception Handling
 	
 	.EXAMPLE
-	An example
+	Connect-Dracoon -ClientID $ClientId -ClientSecret $ClientSecret -Credential $Credential -BaseURL $BaseURL
 	
-	.NOTES
-	General notes
+	Enrolls basic configuration.
 	#>
 
 	[CmdletBinding()]
@@ -52,11 +54,11 @@
 	process
 	{
 		try {
-			$null = Get-Token -ClientID $ClientId -ClientSecret $ClientSecret -Credential $Credential -BaseURL $BaseURL 
+			$null = Get-Token -ClientID $ClientId -ClientSecret $ClientSecret -Credential $Credential -BaseURL $BaseURL
 		}
 		catch {
 			Stop-PSFFunction -Message "Anmeldung fehlgeschlagen! Bitte Zugangsdaten und Netzwerkverbindung prüfen!" -ErrorRecord $_ -Cmdlet $PSCmdlet -EnableException $EnableException
-			return   
+			return
 		}
 
 		Set-PSFConfig -Module 'PSDracoon' -Name 'BaseURL' -Value $BaseURL -PassThru | Register-PSFConfig

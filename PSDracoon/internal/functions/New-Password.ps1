@@ -1,5 +1,17 @@
-﻿function New-Password
-{
+﻿function New-Password {
+    <#
+    .SYNOPSIS
+    Password Generator
+    
+    .DESCRIPTION
+    Password Generator
+    
+    .EXAMPLE
+    New-Password
+    
+    Generates new password.
+    #>
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '')]
 	[CmdletBinding()]
 	param (
 	)

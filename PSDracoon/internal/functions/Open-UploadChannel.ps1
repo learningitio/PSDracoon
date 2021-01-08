@@ -1,5 +1,29 @@
 ﻿function Open-UploadChannel
 {
+    <#
+    .SYNOPSIS
+    Opens Upload-Channel.
+    
+    .DESCRIPTION
+    Opens Upload-Channel.
+    
+    .PARAMETER RoomID
+    Online Space which will be used.
+    
+    .PARAMETER PDFName
+    PDF which will be uploaded
+    
+    .PARAMETER APIUrl
+    Base URL + "/api" -> Auto generated
+    
+    .PARAMETER Token
+    Auth Token generated with Get-Token
+    
+    .EXAMPLE
+    Open-UploadChannel -RoomID $RoomID -PDFName $PDFName -APIUrl $APIUrl -Token $Token
+    
+    Opens Uploadchannel with mandatory parameters.
+    #>
 	[CmdletBinding()]
 	param (
         [Parameter(Mandatory = $true)]
@@ -19,7 +43,7 @@
 		$Token
 	)
     $Parameter= @{
-        "parentId" = $RoomID 
+        "parentId" = $RoomID
         "name"     = $PDFName
     }
     $Response = $null
@@ -36,28 +60,28 @@
     [String]$Status = $response.StatusCode
     $Status = $Status.Remove(1,2)
 
-    switch($status){            
+    switch($status){
             
         1 {
             Write-PSFMessage -Message "HTTP Status: informational response – the request was received, continuing process"
         }
         2 {
             Write-PSFMessage -Message "HTTP Status: successful – the request was successfully received, understood, and accepted"
-        }   
+        }
         3 {
             Write-PSFMessage -Level Warning -Message "HTTP Status: redirection – further action needs to be taken in order to complete the request"
-        }   
+        }
         4 {
             Write-PSFMessage -Level Warning -Message "HTTP Status: client error – the request contains bad syntax or cannot be fulfilled"
-        }   
+        }
         5 {
             Write-PSFMessage -Level Warning -Message "HTTP Status: server error – the server failed to fulfil an apparently valid request"
-        } 
+        }
                       
         Default {
             Write-PSFMessage -Level Warning -Message "HTTP Status: UNKNOWN ERROR!"
-        }            
-    }  
+        }
+    }
 
     if (-not $content.uploadUrl){
         throw "No Upload-URL received"

@@ -1,4 +1,20 @@
 ﻿function Close-UploadChannel {
+    <#
+    .SYNOPSIS
+    Closes Upload Channel which was opened before.
+    
+    .DESCRIPTION
+    Closes Upload Channel which was opened before.
+    
+    .PARAMETER UploadUrl
+    UploadURL which will be closed
+    
+    .EXAMPLE
+    Close-UploadChannel -UploadUrl $UploadUrl
+    
+    Closes Uploadchannel with mandatory parameters.
+    #>
+
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]

@@ -22,6 +22,7 @@
     .EXAMPLE
     Get-Token -ClientID $ClientId -ClientSecret $ClientSecret -Credential $Credential -BaseURL $BaseURL
 
+    Receives token with mandatory parameters.
     #>
 	[CmdletBinding()]
 	param (
@@ -47,9 +48,9 @@
     $Base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $ClientId,$ClientSecret)))
  
     $Body = @{
-        "grant_type" = "password" 
+        "grant_type" = "password"
         "username" = $Credential.Username
-        "password" = $Credential.GetNetworkCredential().Password 
+        "password" = $Credential.GetNetworkCredential().Password
     }
     
     try {
@@ -61,28 +62,28 @@
     $Status = $Status.Remove(1,2)
     $Content = ConvertFrom-Json $Response.content
     $Token = $Content.access_token #Der Zugriffstoken, mit dem alle folgenden Aktionen auf DRACOON ausgeführt werden, wird in die Variable $Token gespeichert
-    switch($status){            
+    switch($status){
             
         1 {
             Write-PSFMessage -Message "HTTP Status: informational response – the request was received, continuing process"
         }
         2 {
             Write-PSFMessage -Message "HTTP Status: successful – the request was successfully received, understood, and accepted"
-        }   
+        }
         3 {
             Write-PSFMessage -Level Warning -Message "HTTP Status: redirection – further action needs to be taken in order to complete the request"
-        }   
+        }
         4 {
             Write-PSFMessage -Level Warning -Message "HTTP Status: client error – the request contains bad syntax or cannot be fulfilled"
-        }   
+        }
         5 {
             Write-PSFMessage -Level Warning -Message "HTTP Status: server error – the server failed to fulfil an apparently valid request"
-        } 
+        }
                       
         Default {
             Write-PSFMessage -Level Warning -Message "HTTP Status: UNKNOWN ERROR!"
-        }            
-    }  
+        }
+    }
 
     if (-not $Token){
         throw "no Token received"

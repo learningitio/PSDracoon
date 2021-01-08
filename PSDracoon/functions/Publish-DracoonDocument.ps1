@@ -1,4 +1,58 @@
 ﻿function Publish-DracoonDocument {
+	<#
+	.SYNOPSIS
+	Shares Dracoon Documents depending on Metadata file (Common UseCase: sharing test results)
+	
+	.DESCRIPTION
+	Generates Path Variables (within standard directory: /%Appdata%/PSDracoon/):
+		Ergebnisse: 	/%Appdata%/PSDracoon/Ergebnisse/
+		Metadaten: 		/%Appdata%/PSDracoon/Metadaten/Metadaten.csv
+		Report:			/%Appdata%/PSDracoon/Report.csv
+
+	begin:
+	- Receives authentication token
+	process:
+	- Import PDF-List
+	- Import Metafiles
+	- Open UploadChannel
+	- Upload File
+	- Close UploadChannel
+	- Sharing Link and password (Mail and SMS)
+	
+	.PARAMETER BaseURL
+	BaseURL - Imported from standard config (Connect-Dracoon)
+	
+	.PARAMETER Credential
+	Credential - Imported from standard config (Connect-Dracoon)
+	
+	.PARAMETER ClientID
+	ClientID - Imported from standard config (Connect-Dracoon)
+	
+	.PARAMETER ClientSecret
+	ClientSecret - Imported from standard config (Connect-Dracoon)
+	
+	.PARAMETER RoomID
+	RoomID - Imported from standard config (Connect-Dracoon)
+	
+	.PARAMETER BasePath
+	BasePath - Imported from standard config (Set within PSDracoon/internal/configurations/configuration.ps1)
+	
+	.PARAMETER EnableException
+	Exception Handling
+
+	.PARAMETER Confirm
+	If this switch is enabled, you will be prompted for confirmation before executing any operations that change state.
+
+	.PARAMETER Whatif
+	If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
+	
+	.EXAMPLE
+	Publish-DracoonDocument
+
+	Uploads files.
+	#>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '')]
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
 	[CmdletBinding(SupportsShouldProcess = $true)]
 	Param (
 		[String]$BaseURL = (Get-PSFConfigValue -FullName "PSDracoon.BaseURL"),
@@ -24,7 +78,7 @@
 		# Hier liegen die PDFs mit den Ergebnissen
 		$ergebnisLocation = Join-Path -Path $BasePath -ChildPath "Ergebnisse"
 		# CSV mit den Metadaten
-		$Metadatendatei = Join-Path -Path $BasePath -ChildPath "Metadaten\Metadaten.csv" 
+		$Metadatendatei = Join-Path -Path $BasePath -ChildPath "Metadaten\Metadaten.csv"
 		# Report-CSV
 		$csvreport = Join-Path -Path $BasePath -ChildPath "Report.csv"
 
@@ -36,7 +90,7 @@
 		}
 		catch {
 			Stop-PSFFunction -Message "Beim Abholen des Tokens ist ein Fehler aufgetreten" -ErrorRecord $_ -Cmdlet $PSCmdlet -EnableException $EnableException
-			return   
+			return
 		}
 	}
 	process {
@@ -69,7 +123,7 @@
 		foreach ($PDF in $PDFListe) {
 			$PDFName = $PDF.BaseName
 			$Person = $Metadata | Where-Object Testnummer -eq $PDFName
-			if (-not $Person) { 
+			if (-not $Person) {
 				Stop-PSFFunction -Message "Person nicht gefunden für: $($PDF.FullName)" -Cmdlet $PSCmdlet -EnableException $EnableException -Continue
 			}
 
@@ -90,7 +144,7 @@
 
 			# Erstellen eines teilbaren Links mit PW (und Mail- und SMSVersand)
 			Invoke-PSFProtectedCommand -Action "Sende SMS und Mail" -Target $PDF -ScriptBlock {
-				Send-DownloadLink -APIUrl $APIUrl -Token $Token -Mobile $Person.Mobile -Mail $person.Mail -NodeID $NodeID 
+				Send-DownloadLink -APIUrl $APIUrl -Token $Token -Mobil $Person.Mobil -Mail $person.Mail -NodeID $NodeID
 			} -PSCmdlet $PSCmdlet -EnableException $EnableException -Continue
 
 			$anzahl++

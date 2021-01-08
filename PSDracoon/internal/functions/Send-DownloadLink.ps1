@@ -1,5 +1,34 @@
 ﻿function Send-DownloadLink
 {
+    <#
+    .SYNOPSIS
+    Shares uploaded file.
+    
+    .DESCRIPTION
+    Uses New-Password for receiving random password.
+    Sends Mail with sharelink to recipient.
+    Send SMS with password to file to recipient.
+    
+    .PARAMETER APIUrl
+    Base URL + "/api" -> Auto generated
+    
+    .PARAMETER Token
+    Auth Token generated with Get-Token
+    
+    .PARAMETER Mobil
+    Recipient mobile number imported from metadata
+    
+    .PARAMETER Mail
+    Recipient mail imported from metadata.
+    
+    .PARAMETER NodeID
+    NodeID generated after closing UploadChannel
+    
+    .EXAMPLE
+    Send-DownloadLink -APIUrl $APIUrl -Token $Token -Mobil $Person.Mobil -Mail $person.Mail -NodeID $NodeID
+    
+    Sends DL-Link with mandatory parameters.
+    #>
 	[CmdletBinding()]
 	param (
 		[String]
@@ -9,7 +38,7 @@
         $Token,
 
         [String]
-        $Mobile,
+        $Mobil,
 
         [String]
         $Mail,
@@ -25,9 +54,9 @@
         nodeId = $NodeID
         password = $password
         textMessageRecipients = @(
-            $Mobile
+            $Mobil
 
-        )   
+        )
     }
 
     # Erstelle Sharelink und Sende SMS
@@ -56,7 +85,7 @@
         body = "Powered by DRACOON - Entwickelt von Philip Lorenz"
         recipients = @(
             $Mail
-        )   
+        )
     }
 
     $parameter = ConvertTo-Json -Depth 3 ($parameter)
