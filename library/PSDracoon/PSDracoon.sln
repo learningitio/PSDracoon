@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{B07DB52F-2DB4-4046-8301-D43EE6487586}") = "PSDracoon", "PSDracoon\PSDracoon.csproj", "{BFB9AFBF-AD43-4C38-8129-1F105C867FC7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFB9AFBF-AD43-4C38-8129-1F105C867FC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB9AFBF-AD43-4C38-8129-1F105C867FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB9AFBF-AD43-4C38-8129-1F105C867FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB9AFBF-AD43-4C38-8129-1F105C867FC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EAC62560-71ED-408E-8604-33311DD29317}
+	EndGlobalSection
+EndGlobal
