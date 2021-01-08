@@ -1,31 +1,12 @@
-﻿# Description
+# dracoon-ps-covid
+Function-based Powershell Script for automated and secure (MFA) distribution of COVID19 test results in collaboration with DRACOON-API.
 
-Insert a useful description for the PSDracoon project here.
 
-Remember, it's the first thing a visitor will see.
 
-# Project Setup Instructions
-## Working with the layout
+Die Corona Pandemie stellt viele Organisationen vor ganz neue Herausforderungen. So stellt zum Beispiel der massenhafte Anfall von Ergebnisdokumenten bei den Corona Tests die Institute vor grosse Herausforderungen bei der Übermittlung dieser Ergebnisse direkt an die Getesteten, da es hier plötzlich sehr stark auch auf den Faktor Zeit ankommt.
+Hier möchte ich PowershellTemplate zur Verfügung stellen, welches genau für diesen Zweck verwendet werden kann. Als Input soll ein Ordner mit PDF-Dokumente (welche die Testergebnisse enthalten) zur Verfügung stehen. Als weiterer Input wird eine CSV benötigt, welche sämtliche Metainformationen enthält (Mailadresse,  Mobilfunknummer und der zugehörige PDF Name).
 
-- Don't touch the psm1 file
-- Place functions you export in `functions/` (can have subfolders)
-- Place private/internal functions invisible to the user in `internal/functions` (can have subfolders)
-- Don't add code directly to the `postimport.ps1` or `preimport.ps1`.
-  Those files are designed to import other files only.
-- When adding files & folders, make sure they are covered by either `postimport.ps1` or `preimport.ps1`.
-  This adds them to both the import and the build sequence.
+Die Sprache Powershell habe ich gewählt, weil diese für Dateihandlung prädestiniert ist und viele IT-Admins darin Kentnisse besitzen. Somit lassen sich hier schnelle Implementierungen realisieren.
+Das Script vergleicht zunächst die neu abgelegten Dateien mit den Metadaten. Wird ein Paar aus Testergebnis und getesteter Person gefunden, wir die PDF mit dem Testergebnis nach DRACOON hochgeladen und ein Downloadlink erzeugt. Der Downloadlink und das schützende Kennwort werden dann per Mail und SMS an die Person übermittelt. Wenn die Person das Ergebnis abruft, wird eine Mailnotification an den Versender zugestellt.
+Ich hoffe, dass dieses Script in dieser Krise noch vielfach Verwendung finden kann. Natürlich lässt es sich auch relativ leicht an andere Use Cases (Versand von Newslettern, Dienstplänen, Rechnungen etc.) anpassen.
 
-## Setting up CI/CD
-
-> To create a PR validation pipeline, set up tasks like this:
-
-- Install Prerequisites (PowerShell Task; VSTS-Prerequisites.ps1)
-- Validate (PowerShell Task; VSTS-Validate.ps1)
-- Publish Test Results (Publish Test Results; NUnit format; Run no matter what)
-
-> To create a build/publish pipeline, set up tasks like this:
-
-- Install Prerequisites (PowerShell Task; VSTS-Prerequisites.ps1)
-- Validate (PowerShell Task; VSTS-Validate.ps1)
-- Build (PowerShell Task; VSTS-Build.ps1)
-- Publish Test Results (Publish Test Results; NUnit format; Run no matter what)
