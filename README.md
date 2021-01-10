@@ -22,7 +22,7 @@ You have to enter authentication details and your personal Dracoon IDs. These in
 The primary use case at the current state is to share clinical test results to patients. Therefor following command is used:
 
 ```powershell
-Publish-Dracoondocument
+Publish-DracoonDocument
 ```
 You can find the needed directory-structure at your user's AppData folder.
 
