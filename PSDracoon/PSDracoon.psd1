@@ -3,7 +3,7 @@
 	RootModule = 'PSDracoon.psm1'
 	
 	# Version number of this module.
-	ModuleVersion = '1.0.0'
+	ModuleVersion = '1.0.1'
 	
 	# ID used to uniquely identify this module
 	GUID = 'b6c8136f-1979-4707-8b40-d8fb4a80b001'

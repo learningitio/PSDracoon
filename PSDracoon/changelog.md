@@ -1,5 +1,10 @@
 ﻿# Changelog
 ## 1.0.0 (2021-01-03)
- - New: Some Stuff
- - Upd: Moar Stuff
- - Fix: Much Stuff
+ - New: /
+ - Upd: Updates README and other description elements
+ - Fix: /
+
+## 1.0.0 (2021-01-03)
+ - New: Initial Release
+ - Upd: Initial Release
+ - Fix: Initial Release

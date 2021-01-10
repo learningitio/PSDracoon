@@ -1,12 +1,36 @@
-# dracoon-ps-covid
-Function-based Powershell Script for automated and secure (MFA) distribution of COVID19 test results in collaboration with DRACOON-API.
+# PSDracoon
+Powershell Module for handling tasks on Dracoon-Software (https://www.dracoon.com).
+The module is completely plattform independant and can be run on MacOS, Windows and Linux.
 
+## How to Install
+In order to acquire the latest version of the module from a machine that has internet connectivity,
+simply run the following PowerShell line:
 
+```powershell
+Install-Module -Name PSDracoon -Force
+```
 
-Die Corona Pandemie stellt viele Organisationen vor ganz neue Herausforderungen. So stellt zum Beispiel der massenhafte Anfall von Ergebnisdokumenten bei den Corona Tests die Institute vor grosse Herausforderungen bei der Übermittlung dieser Ergebnisse direkt an die Getesteten, da es hier plötzlich sehr stark auch auf den Faktor Zeit ankommt.
-Hier möchte ich PowershellTemplate zur Verfügung stellen, welches genau für diesen Zweck verwendet werden kann. Als Input soll ein Ordner mit PDF-Dokumente (welche die Testergebnisse enthalten) zur Verfügung stehen. Als weiterer Input wird eine CSV benötigt, welche sämtliche Metainformationen enthält (Mailadresse,  Mobilfunknummer und der zugehörige PDF Name).
+Afterwards you can setup the module by using following Command:
 
-Die Sprache Powershell habe ich gewählt, weil diese für Dateihandlung prädestiniert ist und viele IT-Admins darin Kentnisse besitzen. Somit lassen sich hier schnelle Implementierungen realisieren.
-Das Script vergleicht zunächst die neu abgelegten Dateien mit den Metadaten. Wird ein Paar aus Testergebnis und getesteter Person gefunden, wir die PDF mit dem Testergebnis nach DRACOON hochgeladen und ein Downloadlink erzeugt. Der Downloadlink und das schützende Kennwort werden dann per Mail und SMS an die Person übermittelt. Wenn die Person das Ergebnis abruft, wird eine Mailnotification an den Versender zugestellt.
-Ich hoffe, dass dieses Script in dieser Krise noch vielfach Verwendung finden kann. Natürlich lässt es sich auch relativ leicht an andere Use Cases (Versand von Newslettern, Dienstplänen, Rechnungen etc.) anpassen.
+```powershell
+Connect-Dracoon
+```
 
+You have to enter authentication details and your personal Dracoon IDs. These information will be saved securely on your client only by using PSFConfig (PSFramework Module).
+
+## Usecases
+The primary use case at the current state is to share clinical test results to patients. Therefor following command is used:
+
+```powershell
+Publish-Dracoondocument
+```
+You can find the needed directory-structure at your user's AppData folder.
+
+**Windows**
+C:\Users\USERNAME\AppData
+
+**MacOS**
+/Users/USERNAME/.local/share/
+
+**Linux**
+/Users/USERNAME/.local/share/
